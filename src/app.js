@@ -114,7 +114,7 @@ function intro(){
 
         preloaderTL.to(glassMaterial, { opacity: .8, duration:1, ease: 'expo.out'})
         preloaderTL.to(logoObj.scale, { x: logoScale, y: logoScale, z: logoScale, ease: 'expo.out', duration: 2}, 0)
-        preloaderTL.fromTo(logoObj.rotation, {z: 0 * (Math.PI/180)}, { z: 35 * (Math.PI/180), duration:2, ease: 'power3.out'}, 0)
+        preloaderTL.fromTo(logoObj.rotation, {z: 0 * (Math.PI/180)}, { z: 20 * (Math.PI/180), duration:2, ease: 'power3.out'}, 0)
         preloaderTL.to('.hero-inner__text span', { y:0, duration:2, ease: 'expo.out', stagger: .25, onComplete: ()=>{
             locoScroll.start()
         }}, '-=1')
@@ -402,9 +402,9 @@ function engineerAnimation(){
       
       const outroTL = gsap.timeline({paused: true, defaults:{duration: .5}})
       outroTL
-          .to('.pinecone-moto', {opacity: 1, duration:1, ease: 'power0.out'}, 1)
-          .to('.pinecone-moto span', {y: '-=100%',  duration:.75, ease: 'expo.inOut'})
-          .to('.pinecone-moto span', {y: '-=100%',  duration:.75, ease: 'expo.inOut'}, '+=1')
+          .to('.pinecone-moto', {opacity: 1, duration:.5, ease: 'power0.out'}, 0)
+          .to('.pinecone-moto span', {y: '-=100%',  duration:.25, ease: 'expo.inOut'})
+          .to('.pinecone-moto span', {y: '-=100%',  duration:.25, ease: 'expo.inOut'}, '+=1')
 
       const pineConersTL = gsap.timeline({
       scrollTrigger: {
@@ -415,16 +415,17 @@ function engineerAnimation(){
           scrub: true,
           pin: true,
           ease: 'expo.out',
-          onEnter: ()=> {
-            outroTL.seek(0).play()
-        },
-          onEnterBack: ()=> {
-            outroTL.reverse(0);
-        },
+        //   onEnter: ()=> {
+        //     outroTL.seek(0).play()
+        // },
+        //   onEnterBack: ()=> {
+        //     outroTL.reverse(0);
+        // },
+            onUpdate: self => outroTL.progress( self.progress )
       },
       })
       
-      pineConersTL.fromTo('.piny-img', { opacity:1, z: '1500px', y: '50%'}, { opacity:0, z: '-3000px', y: 0, stagger: .15})
+      pineConersTL.fromTo('.piny-img', { opacity:1, z: '1500px', y: '50%'}, { opacity:0, z: '-4000px', y: 0, stagger: .15})
 
 }
 
@@ -481,8 +482,6 @@ const tick = () =>
     directionalLight2.position.x = Math.cos(-elapsedTime * 0.1)
     directionalLight2.position.y = Math.sin(-elapsedTime * 0.1)
     directionalLight2.position.z = Math.cos(-elapsedTime * 0.1)
-    // if(logoObj !== null){
-    // }
     
     shaderMat.uniforms.time.value += 0.01;
     shaderReflect.uniforms.time.value += 0.01;

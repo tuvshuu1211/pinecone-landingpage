@@ -77,20 +77,22 @@
                 //position
                 position: absolute;
                 
-                // -webkit-text-stroke-width: 1px;
-                // -webkit-text-stroke-color: $white;
-                // color: transparent;
+                text-transform: uppercase;
                 &:nth-child(1){
                     top: 15%;
                     left: 0;
-                    font-weight: 400;
+                    font-weight: 900;
                 }
                 &:nth-child(2){
                     font-weight: 900;
-                    bottom: 10%;
+                    bottom: 5%;
                     right: 0;
-                    font-size: calc(100vw / 5);
-                    color: $primary;
+                    font-size: calc(100vw / 7);
+                    
+                    -webkit-text-stroke-width: 1px;
+                    -webkit-text-stroke-color: $white;
+                    color: transparent;
+                    // color: $primary;
                 }
                 span{
                     display: block;
