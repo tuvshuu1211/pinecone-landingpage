@@ -1,0 +1,46 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body
+{
+    /* overflow: hidden; */
+    background-color: $black;
+    color: $white;
+    background-color:hsla(0,0%,0%,1);
+    background-image:
+    radial-gradient(at 74% 0%, hsla(269,100%,56%,0.05) 0px, transparent 50%),
+    radial-gradient(at 91% 16%, hsla(195,100%,76%,0.05) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, hsla(210,100%,59%,0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, hsla(134,74%,65%,0.05) 0px, transparent 50%);
+    background-attachment: scroll;
+}
+
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+.section
+{
+    min-height: 100vh;
+    font-family: 'Pinecone';
+}
+
+section:nth-child(odd)
+{
+    justify-content: flex-end;
+}
+
+.container{
+    width: 90%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}

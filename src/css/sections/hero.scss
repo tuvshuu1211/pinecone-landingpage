@@ -1,0 +1,118 @@
+#hero{
+    height: 100vh;
+    .hero-inner{
+        //flex
+        display: flex;
+        align-items: center;
+    
+        //box-model
+        height: 100vh;
+        width: 100%;
+        margin: 0 auto;
+
+        //position
+        position: relative;
+
+        &__contact-us{
+            position: absolute;
+            right: 0;
+            top: 15%;
+            z-index: 2000;
+
+            width: 200px;
+            height: 200px;
+
+            color: $white;
+            text-decoration: none;
+
+            display: flex;
+            border: 1px solid rgba($color: white, $alpha: .2);
+            border-radius: 100px;
+
+            overflow: hidden;
+
+            span{
+                margin: auto;
+            }
+
+            &::after{
+                content: '';
+                width: 150%;
+                height: 150%;
+                border-radius: 100%;
+
+                background-color: $white;
+
+                position: absolute;
+                left: 50%;
+                top: 50%;
+
+                transform: translate(-50%, -50%) scale(0);
+                transform-origin: left bottom;
+
+                transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+            }
+            &:hover{
+                color: $black;
+                &::after{
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+        }
+        &__body{
+            width: 100%;
+        }
+        &__text{
+            //box-model
+            min-height: 90vh;
+
+            // position
+            position: relative;
+
+            //text style
+            font-size: calc(100vw / 8);
+            font-weight: 900;
+            p{
+                hyphens:auto;
+                //position
+                position: absolute;
+                
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: $white;
+                color: transparent;
+                &:nth-child(1){
+                    top: 15%;
+                    left: 0;
+                    font-weight: 400;
+                }
+                &:nth-child(2){
+                    font-weight: 900;
+                    bottom: 10%;
+                    right: 0;
+                    font-size: calc(100vw / 5);
+                    // color: $primary;
+                }
+                span{
+                    display: block;
+                    transform: translateY(100%);
+                }
+            }
+        }
+
+        &__subtext{
+            max-width: 600px;
+            font-size: calc(100vw / 50);
+            line-height: calc(100vw / 50 * 1.25);
+            position: absolute;
+            bottom: 10%;
+            
+            p{
+                margin-bottom: .25rem;
+                span{
+                    display: block;
+                    transform: translateY(100%);
+                }
+            }
+        }
+    }
+}

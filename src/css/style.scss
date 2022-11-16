@@ -1,0 +1,21 @@
+
+// Typography
+@import './typography/fonts.scss';
+
+//Variable
+@import './variables/variable.scss';
+
+// Base
+@import './base/base.scss';
+@import './base/mouse.scss';
+@import './base/preload.scss';
+
+//Components
+@import './utility/utilities.scss';
+
+//Components
+@import './components/navbar.scss';
+
+//Sections
+@import './sections/hero.scss';
+@import './sections/section.scss';
