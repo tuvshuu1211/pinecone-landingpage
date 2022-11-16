@@ -118,10 +118,10 @@
         }
         .piny-img{
             position: absolute;
-            left: -20%;
+            left: 0%;
             top: 50%;
             &:nth-child(even){
-                right: -20%;
+                right: 0%;
                 left: auto;
             }
         }

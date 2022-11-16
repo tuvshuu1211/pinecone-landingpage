@@ -88,7 +88,7 @@
                     bottom: 5%;
                     right: 0;
                     font-size: calc(100vw / 7);
-                    
+
                     -webkit-text-stroke-width: 1px;
                     -webkit-text-stroke-color: $white;
                     color: transparent;
@@ -102,7 +102,7 @@
         }
 
         &__subtext{
-            max-width: 600px;
+            max-width: 30%;
             font-size: calc(100vw / 50);
             line-height: calc(100vw / 50 * 1.25);
             position: absolute;

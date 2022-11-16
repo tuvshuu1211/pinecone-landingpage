@@ -5,6 +5,10 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
+import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer'
+import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass'
+import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass'
+
 import MouseFollower from "mouse-follower";
 import {gsap} from "gsap";
 import { ScrollTrigger } from 'gsap/all';
@@ -357,6 +361,10 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.physicallyCorrectLights = true
 
+//Post Process
+const renderScene = new RenderPass(scene, camera);
+const bloomPass = new UnrealBloomPass()
+
 /**
  * Timeline Animations
  */
@@ -376,7 +384,7 @@ const heroScroll = ()=>{
       });
 
     heroTL.set('.hero-inner__subtext span', {y: 0, x: 0})
-    heroTL.fromTo(logoObj.rotation, {z: 35 * (Math.PI/180)}, {y:0, z: -180 * (Math.PI/180)},0)
+    heroTL.fromTo(logoObj.rotation, {z: 20 * (Math.PI/180)}, {y:0, z: -180 * (Math.PI/180)},0)
     heroTL.to('.hero-inner__text p:nth-child(1)', {x: "-200%",},0)
     heroTL.to('.hero-inner__text p:nth-child(2)', {x: '200%', duration: .5},0)
     heroTL.to('.hero-inner__subtext span',{y: "-200%", stagger: .03}, .5)
