@@ -363,8 +363,16 @@ renderer.physicallyCorrectLights = true
 
 //Post Process
 const renderScene = new RenderPass(scene, camera);
-const bloomPass = new UnrealBloomPass()
+const bloomPass = new UnrealBloomPass( new THREE.Vector2(sizes.width, sizes.height), 1.5, 0.4, 0.05 )
+bloomPass.threshold = 0
+bloomPass.strength = 2
+bloomPass.radius = 0
 
+const bloomComposer = new EffectComposer(renderer);
+bloomComposer.setSize(sizes.width, sizes.height)
+bloomComposer.renderToScreen = true
+bloomComposer.addPass(renderScene)
+bloomComposer.addPass(bloomPass)
 /**
  * Timeline Animations
  */
