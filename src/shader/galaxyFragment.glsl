@@ -19,14 +19,14 @@ void main(){
     float lightY = 0.015 / distance(lightUvY, vec2(0.5));
     
     // float strength = step(0.25, lightX * lightY);
-    // float strength = lightX * lightY;
+    float strength = lightX * lightY;
     // float strength = 1.0 - step(0.35, abs(distance(vec2(lightX, lightY), vec2(0.5)) - 1.0));
     // float strength = pow(lightX * lightY, 5.0);
 
     //Light
-    float strength = distance(gl_PointCoord, vec2(0.5));
-    strength = 1.0 - strength;
-    strength = pow(strength, 10.0);
+    // float strength = distance(gl_PointCoord, vec2(0.5));
+    // strength = 1.0 - strength;
+    // strength = pow(strength, 10.0);
 
     //Final Color
     vec3 color = mix(vec3( 5. / 255.), vColor, strength);

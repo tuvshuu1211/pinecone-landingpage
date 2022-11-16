@@ -77,9 +77,9 @@
                 //position
                 position: absolute;
                 
-                -webkit-text-stroke-width: 1px;
-                -webkit-text-stroke-color: $white;
-                color: transparent;
+                // -webkit-text-stroke-width: 1px;
+                // -webkit-text-stroke-color: $white;
+                // color: transparent;
                 &:nth-child(1){
                     top: 15%;
                     left: 0;
@@ -90,7 +90,7 @@
                     bottom: 10%;
                     right: 0;
                     font-size: calc(100vw / 5);
-                    // color: $primary;
+                    color: $primary;
                 }
                 span{
                     display: block;
