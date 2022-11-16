@@ -5,10 +5,6 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer'
-import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass'
-import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass'
-
 import MouseFollower from "mouse-follower";
 import {gsap} from "gsap";
 import { ScrollTrigger } from 'gsap/all';
@@ -361,18 +357,6 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.physicallyCorrectLights = true
 
-//Post Process
-const renderScene = new RenderPass(scene, camera);
-const bloomPass = new UnrealBloomPass( new THREE.Vector2(sizes.width, sizes.height), 1.5, 0.4, 0.05 )
-bloomPass.threshold = 0
-bloomPass.strength = 2
-bloomPass.radius = 0
-
-const bloomComposer = new EffectComposer(renderer);
-bloomComposer.setSize(sizes.width, sizes.height)
-bloomComposer.renderToScreen = true
-bloomComposer.addPass(renderScene)
-bloomComposer.addPass(bloomPass)
 /**
  * Timeline Animations
  */
