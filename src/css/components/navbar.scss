@@ -1,5 +1,47 @@
-.main-navbar{
+header.header-navbar{
     position: fixed;
-    z-index: 2000;
-    padding: 2.5rem;
+    z-index: 1020;
+
+    width: 100%;
+
+    font-family: 'Pinecone';
+    
+    .main-navbar{
+        width: 100%;
+        padding: 5rem 0;
+
+        display: flex;
+        justify-content: space-between;
+
+        .navbar-items{
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+
+            li{
+                font-size: 1.25rem;
+            }
+        }
+    }
+
+    @media(max-width: 576px){
+        .main-navbar{
+            padding: 2rem 0;
+
+            .navbar-brand{
+                width: 120px;
+                img{
+                    max-width: 100%;
+                }
+            }
+            .navbar-items{
+                gap: 1rem;
+
+                li{
+                    font-size: 1rem
+                }
+            }
+        }
+    }
 }

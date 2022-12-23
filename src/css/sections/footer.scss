@@ -1,0 +1,38 @@
+.pinecone-footer{
+    width: 100%;
+    height: 100vh;
+    font-family: 'Pinecone';
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-top: 10%;
+
+    .footer-heading{
+        font-size: calc($display-font3 / 1.75);
+        text-transform: uppercase;
+        h2{
+            font-weight: 100;
+            margin: 0;
+            line-height: calc($display-font3);
+            span{
+                position: relative;
+                display: block;
+            }
+            &.highlight{
+                font-weight: 600;
+                color: $primary;
+            }
+        }
+    }
+
+    @media(max-width: 576px){
+        align-items: center;
+        .footer-heading{
+            transform: translateY(-100%);
+            font-size: calc($display-font3);
+            h2{
+                line-height: calc($display-font3 * 1.5)
+            }
+        }
+    }
+}

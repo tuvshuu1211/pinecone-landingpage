@@ -9,3 +9,14 @@ $white: var(--white);
 $black: var(--black);
 $primary: var(--primary);
 $secondary: var(--secondary);
+
+//font scale
+
+$display-font1: calc(10rem + 5vw);
+$display-font2: calc(5rem + 5vw);
+$display-font3: calc(1rem + 4vw);
+
+$font-xxl: calc(1rem + 1.5vw);
+$font-xl: calc(1rem + .75vw);
+$font-lg: calc(1rem + .33vw);
+$font-md: calc(1rem + 0vw);

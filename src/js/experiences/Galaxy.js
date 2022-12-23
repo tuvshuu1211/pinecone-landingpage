@@ -3,7 +3,7 @@ import galaxyVertex from '../../shader/galaxyVertex.glsl'
 import galaxyFragment from '../../shader/galaxyFragment.glsl'
 
 export default function generateGalaxy(objectsDistance, renderer, scene){
-    const particesCount = 20000
+    const particesCount = 10000
     const positions = new Float32Array(particesCount * 3)
     const colors = new Float32Array(particesCount * 3)
     const insideColor = new THREE.Color('#FE5943')
@@ -44,6 +44,6 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
     
     //Points
     const particles = new THREE.Points(particlesGeometry, particlesMaterial)
-    
+    // particles.position.set(0, 0, 0)
     scene.add(particles)   
 }

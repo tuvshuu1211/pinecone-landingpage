@@ -35,7 +35,7 @@ void main(){
         * Size
     */
     gl_PointSize = uSize;
-    gl_PointSize *= (1.1 / - viewPosition.z); 
+    gl_PointSize *= (1.5 / - viewPosition.z); 
 
     /**
     * Color

@@ -1,12 +1,15 @@
 #hero{
     height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    // background-color: $black;
     .hero-inner{
         //flex
         display: flex;
         align-items: center;
     
         //box-model
-        height: 100vh;
+        height: 100vh;s
         width: 100%;
         margin: 0 auto;
 
@@ -58,28 +61,32 @@
                     transform: translate(-50%, -50%) scale(1);
                 }
             }
+
+            @media(max-width: 576px){
+                display: none;
+            }
         }
         &__body{
             width: 100%;
         }
         &__text{
             //box-model
-            min-height: 90vh;
+            height: 90vh;
 
             // position
             position: relative;
 
             //text style
-            font-size: calc(100vw / 8);
+            font-size: $display-font1;
             font-weight: 900;
             p{
                 hyphens:auto;
                 //position
                 position: absolute;
                 
-                text-transform: uppercase;
+                // text-transform: uppercase;
                 &:nth-child(1){
-                    top: 15%;
+                    top: 10%;
                     left: 0;
                     font-weight: 900;
                 }
@@ -87,9 +94,8 @@
                     font-weight: 900;
                     bottom: 5%;
                     right: 0;
-                    font-size: calc(100vw / 7);
 
-                    -webkit-text-stroke-width: 1px;
+                    -webkit-text-stroke-width: 2px;
                     -webkit-text-stroke-color: $white;
                     color: transparent;
                     // color: $primary;
@@ -102,9 +108,9 @@
         }
 
         &__subtext{
-            max-width: 30%;
-            font-size: calc(100vw / 50);
-            line-height: calc(100vw / 50 * 1.25);
+            max-width: 800px;
+            font-size: $font-xxl;
+            line-height: calc($font-xxl * 1.25);
             position: absolute;
             bottom: 10%;
             

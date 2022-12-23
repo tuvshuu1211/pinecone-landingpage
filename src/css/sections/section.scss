@@ -8,12 +8,12 @@
         position: relative;
     }
     &__heading{
-        font-size: calc(100vw/25);
+        font-size: $display-font3;
         margin-bottom: 1rem;
     }
     &__content{
-        font-size: calc(100vw/69);
-        line-height: calc(100vw/69 * 2);
+        font-size: $font-xl;
+        line-height: calc($font-xl * 1.5);
         font-weight: 400;
         margin-bottom: 5vh;
     }
@@ -40,6 +40,22 @@
             width: 40%;
         }
     }
+    @media(max-width: 576px){
+        .section-inner{
+            &__body{
+                width: 100%;
+                flex-direction: column;
+            }
+            &__heading{
+                transform: translateY(-50%);
+                width: 100%;
+                order: -1;
+            }
+            &__content{
+                width: 100%;
+            }
+        }
+    }
 }
 
 .human-centric{
@@ -52,6 +68,22 @@
         &__content{
             width: 40%;
             order: 1;
+        }
+    }
+    @media(max-width: 576px){
+        .section-inner{
+            &__body{
+                width: 100%;
+                flex-direction: column;
+            }
+            &__heading{
+                transform: translateY(-50%);
+                width: 100%;
+                order: -1;
+            }
+            &__content{
+                width: 100%;
+            }
         }
     }
 }
@@ -73,10 +105,19 @@
     }
     .section-inner{
         &__content{
-            font-size: calc(100vw / 40);
-            line-height: calc((100vw / 40) * 1.5);
+            font-size: $font-xxl;
+            line-height: calc($font-xxl * 1.5);
             margin-bottom: 15vh;
-            width: 61.8%;
+            width: 70%;
+        }
+    }
+
+    @media(max-width: 576px){
+        .section-inner{
+            &__content{
+                width: 100%;
+                margin-bottom: 2rem;
+            }
         }
     }
 }
@@ -84,7 +125,8 @@
 .pineconers{
     height: 100vh;
     position: relative;
-    background-color: rgba($color: #090909, $alpha: 1.0);
+    background-color: rgba($color: #000000, $alpha: 1.0);
+    
 
     &::before{
         content: '';
@@ -92,7 +134,7 @@
         top: -200px;
         height: 200px;
         width: 100%;
-        background-image: linear-gradient(to top, rgba(9, 9, 9, 1) 0%, rgba(9, 9, 9, 0) 100%);
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
     }
     .pineconers-content{
         position: relative;
@@ -134,20 +176,38 @@
         left: 50%;
         transform: translate(-50%, -50%);
 
-        font-size: calc(100vw / 30);
+        font-size: calc($display-font3 * 0.65);
 
         vertical-align: baseline;
+
+        text-align: center;
         
         .mask-text{
             display: inline-block;
             margin-left: 1rem;
             overflow: hidden;
-            height: calc(100vw / 30);
+            height: calc($display-font3 * 0.65);
             vertical-align: top;
             span{
                 display: block;
                 color: $primary;
                 font-weight: 600;
+            }
+        }
+    }
+    @media(max-width: 576px){
+        .pinecone-moto{
+            width: 100%;
+            font-size: calc($display-font2 * 0.65);
+
+            .mask-text{
+                height: calc($display-font2 * 0.65)
+            }
+        }
+
+        .pineconers-content{
+            .piny-img{
+                width: 400px;
             }
         }
     }
