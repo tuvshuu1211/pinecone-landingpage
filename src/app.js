@@ -373,7 +373,7 @@ function mainPage(){
     welcomeGroup.position.z = -4
     welcomeGroup.position.x = -.5
     welcomeGroup.rotation.y = -25 * (Math.PI / 180)
-    welcomeGroup.rotation.z = -10 * (Math.PI / 180)
+    welcomeGroup.rotation.z = -5 * (Math.PI / 180)
     scene.add(welcomeGroup)
 
     RectAreaLightUniformsLib.init();
