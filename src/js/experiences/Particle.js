@@ -23,7 +23,7 @@ export default function Particle(renderer, scene){
         const mesh = new THREE.Mesh(plane, material)
         mesh.position.set(
             (Math.random() - 0.5) * 2, 
-            (Math.random() - 0.5) * 2, 
+            ((Math.random() - 0.5) * 2) + 0.5, 
             0
             )
         scene.add(mesh)

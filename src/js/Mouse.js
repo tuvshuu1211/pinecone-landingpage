@@ -15,17 +15,6 @@ export default function Mouse(){
         stickDelta: 0.1,
     });
     const mfMagnet = document.querySelector('.mouse-magnet');
-    const mfMagnetEl = document.querySelector('.mouse-magnet span');
-    
-    mfMagnet.addEventListener('mouseenter', () => {
-        cursor.setStick(mfMagnetEl);
-        cursor.setText("Let's Talk");
-    });
-    
-    mfMagnet.addEventListener('mouseleave', () => {
-        cursor.removeStick();
-        cursor.removeText();
-    });
     
     
     function playPauseMedia() {

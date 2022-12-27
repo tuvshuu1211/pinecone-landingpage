@@ -3,7 +3,7 @@
   "repository": "#",
   "license": "MIT",
   "scripts": {
-    "start": "parcel src/index.html",
+    "start": "parcel src/*.html",
     "build": "parcel build src/*.html --dist-dir ./dist"
   },
   "dependencies": {
@@ -14,15 +14,19 @@
     "lil-gui": "^0.17.0",
     "locomotive-scroll": "^4.1.4",
     "mouse-follower": "^1.1.2",
+    "splitting": "^1.0.6",
     "three": "^0.146.0"
   },
   "devDependencies": {
     "@parcel/transformer-glsl": "^2.7.0",
     "@parcel/transformer-sass": "^2.7.0",
+    "buffer": "^6.0.3",
     "parcel": "^2.7.0",
     "parcel-reporter-static-files-copy": "^1.4.0",
+    "process": "^0.11.10",
     "sass": "^1.54.9",
-    "sass-loader": "^13.0.2"
+    "sass-loader": "^13.0.2",
+    "util": "^0.12.5"
   },
   "staticFiles": {
     "staticOutPath": "static"

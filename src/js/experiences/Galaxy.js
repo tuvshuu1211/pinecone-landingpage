@@ -3,7 +3,7 @@ import galaxyVertex from '../../shader/galaxyVertex.glsl'
 import galaxyFragment from '../../shader/galaxyFragment.glsl'
 
 export default function generateGalaxy(objectsDistance, renderer, scene){
-    const particesCount = 10000
+    const particesCount = 5000
     const positions = new Float32Array(particesCount * 3)
     const colors = new Float32Array(particesCount * 3)
     const insideColor = new THREE.Color('#FE5943')
@@ -12,7 +12,7 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
     for(let i = 0; i < particesCount; i++){
         positions[i * 3 + 0] = (Math.random() - 0.5) * 10
         positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * objectsDistance * 10
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 10
+        positions[i * 3 + 2] = ((Math.random() - 0.5) * 5) + 3
     
         const radius = Math.random() * 5
         

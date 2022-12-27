@@ -4,40 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pinecone</title>
+    <title>The Pinecone LLC</title>
     <link rel="stylesheet" href="css/scroll.css">
     <link rel="stylesheet" href="css/style.scss">
 </head>
 <body>
-    <div id="preloader"></div>
+    <div id="preloader">
+        <div class="counter">
+            <h2></h2>
+            <hr>
+        </div>
+    </div>
     <canvas class="webgl"></canvas>
     <header class="header-navbar">
         <div class="container">
         <nav class="main-navbar">
                 <div class="navbar-brand">
-                    <img src="./images/logo.svg" alt="">
+                    <img src="./images/logo.svg" alt="pinecone logo">
                 </div>
 
                 <ul class="navbar-items">
-                    <li class="navbar-item">
-                        <a href="#">Career</a>
+                    <li class="navbar-item title-hover">
+                        <a data-text="Career" href="career.html">Career</a>
                     </li>
-                    <li class="navbar-item">
-                        <a href="#">Contact us</a>
+                    <li class="navbar-item title-hover">
+                        <a data-text="Contact us" href="contact.html">Contact us</a>
                     </li>
                 </ul>
             </nav>
         </div>
     </header>
-    <main data-scroll-container class=".smooth-scroll">
+    <main data-scroll-container class="smooth-scroll">
     
         <section id="hero" class="section">
             <div class="container">
                 <div class="hero-inner">
-                    <a href="#" class="hero-inner__contact-us mouse-magnet" data-magnetic>
-                        <span>Contact us</span>
-                    </a>
                     <div class="hero-inner__body">
+
                         <div class="hero-inner__text">
                             <p class="text-mask">
                                 <span style="--title-index: 0">&lt</span>
@@ -59,13 +62,15 @@
             </div>
         </section>
 
-        <section class="section showreel">
+        <section class="section showreel" data-scroll data-scroll-offset="-60%" data-scroll-repeat="true">
             <div class="container">
                 <div class="section-inner">
                     <div class="section-inner__body">
-                        <p class="section-inner__content">
-                            We craft, design, and deliver experiences that challenge reality & environments by exploring the impossible then making it a reality.
-                        </p>
+                        <div class="section-inner__content">
+                            <h2 data-splitting="lines">
+                                We craft, design, and deliver experiences that challenge reality & environments by exploring the impossible then making it a reality.
+                            </h2>
+                        </div>
                         <video id="showreel-video" class="showreel-video" muted autoplay loop playinline>
                             <source src="./images/pinecone.mp4" type="video/mp4">
                             Your browser does not support the video tag.
@@ -74,24 +79,24 @@
                 </div>
             </div>
         </section>
-        <section  class="section human-centric">
+        <section  class="section human-centric"  >
             <div class="container">
                 <div class="section-inner">
                     <div class="section-inner__body">
-                        <h2 class="section-inner__heading">Human-centric culture</h2>
-                        <p class="section-inner__content">
+                        <h2 class="section-inner__heading" >Human-centric culture</h2>
+                        <p class="section-inner__content" >
                             With human-centered culture, we can enable unlimited human potential to create innovative solution with growth and where everyone's voices are heard.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
-        <section  class="section engineer-driven">
+        <section  class="section engineer-driven"  >
             <div class="container">
                 <div class="section-inner">
                     <div class="section-inner__body">
-                        <h2 class="section-inner__heading">Engineer-driven environment</h2>
-                        <p class="section-inner__content">
+                        <h2 class="section-inner__heading" >Engineer-driven environment</h2>
+                        <p class="section-inner__content" >
                             Pinecone creates a space for a self-initiated problem solving.
                         </p>
                     </div>
@@ -104,37 +109,37 @@
                     <div class="pineconers-scene">
                         <div class="pineconers-element">
                             <div class="piny-img" style="--index: 1">
-                                <img src="./images/pineconers/1.png" alt="">
+                                <img src="./images/pineconers/1.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 2">
-                                <img src="./images/pineconers/2.png" alt="">
+                                <img src="./images/pineconers/2.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 3">
-                                <img src="./images/pineconers/3.png" alt="">
+                                <img src="./images/pineconers/3.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 4">
-                                <img src="./images/pineconers/4.png" alt="">
+                                <img src="./images/pineconers/4.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 5">
-                                <img src="./images/pineconers/5.png" alt="">
+                                <img src="./images/pineconers/5.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 6">
-                                <img src="./images/pineconers/6.png" alt="">
+                                <img src="./images/pineconers/6.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 7">
-                                <img src="./images/pineconers/7.png" alt="">
+                                <img src="./images/pineconers/7.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 8">
-                                <img src="./images/pineconers/8.png" alt="">
+                                <img src="./images/pineconers/8.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 9">
-                                <img src="./images/pineconers/9.png" alt="">
+                                <img src="./images/pineconers/9.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 10">
-                                <img src="./images/pineconers/10.png" alt="">
+                                <img src="./images/pineconers/10.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                             <div class="piny-img" style="--index: 11">
-                                <img src="./images/pineconers/11.png" alt="">
+                                <img src="./images/pineconers/11.png" alt=" pinecone lcc, pineconers, pinecone academy">
                             </div>
                         </div>
                     </div>

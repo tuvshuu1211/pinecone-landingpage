@@ -1,0 +1,13 @@
+
+
+.btn{
+    cursor: pointer;
+    padding: 1rem 2rem;
+    display: block;
+    width: max-content;
+
+    &-light{
+        background: $white;
+        color: $black;
+    }
+}

@@ -97,16 +97,26 @@
 //     }
 // }
 
+.section{
+    .section-inner{
+        &__content{
+            h2{
+                font-size: $font-xxl;
+                line-height: calc($font-xxl * 1.5);
+                font-weight: 400;
+            }
+        }
+    }
+}
+
 .showreel{
-    transform: translateY(-30%);
+    transform: translateY(-40%);
     .showreel-video{
         width: 100%;
         // height: 90vh;
     }
     .section-inner{
         &__content{
-            font-size: $font-xxl;
-            line-height: calc($font-xxl * 1.5);
             margin-bottom: 15vh;
             width: 70%;
         }
@@ -117,6 +127,36 @@
             &__content{
                 width: 100%;
                 margin-bottom: 2rem;
+            }
+        }
+    }
+}
+
+.section{
+    [data-splitting]{
+        span{
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-right: .5rem;
+            &::after{
+                position: absolute;
+                left: 0;
+                right: 0;
+                content: attr(data-word);
+                color: white;
+                transform: translateY(120%);
+                transition: transform 1s cubic-bezier(.82,.03,.42,.99);
+                transition-delay: calc(var(--line-index) * 0.15s);
+            }
+        }
+    }
+    &.is-inview{
+        [data-splitting]{
+            span{
+                &::after{
+                    transform: translateY(0%);
+                }
             }
         }
     }
@@ -209,6 +249,95 @@
             .piny-img{
                 width: 400px;
             }
+        }
+    }
+}
+
+.careers{
+    .career-list{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 20%;
+        border-bottom: 1px solid rgba($color:  white, $alpha: .3);
+        padding: 4rem 0;
+        &__info{
+            flex: 1 80%;
+            &__title{
+                font-size: $font-xl;
+                margin-bottom: 1rem;
+            }
+            &__meta{
+                list-style: none;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 2rem;
+                opacity: .5;
+            }
+        }
+        &__desc{
+            p{
+                margin-bottom: 2rem;
+                font-size: $font-md;
+                line-height: calc($font-md * 2);
+            }
+            .btn{
+                margin-left: auto;
+            }
+        }
+    }
+    @media (min-width: 576px) {
+        .career-list{
+            flex-direction: row;
+        }
+    }
+}
+
+.contact-hero{
+    margin-top: calc($navbar-height * 1.5);
+    padding-bottom: $navbar-height;
+    &__information{
+        width: 100%;
+        list-style: none;
+
+        li{
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba($color: white, $alpha: .3);
+            p{
+                font-size: $font-lg;
+                margin-bottom: 1rem;
+            }
+            .contact-email{
+                cursor: pointer;
+                font-size: $font-xxl;   
+            }
+        }
+    }
+
+    .getintouch{
+        width: 100%;
+        margin-left: auto;
+        margin-top: calc($navbar-height / 2);
+        p{
+            font-size: $font-lg;
+            margin-bottom: 1rem;
+        }
+        h2{
+            font-size: $font-xxl;
+            margin-bottom: $font-xxl;
+        }
+        address{
+            max-width: 250px;
+            font-size: calc($font-lg * 0.875);
+            line-height: calc($font-xl * 1);
+            font-style: normal;
+            color: rgba($color: white, $alpha: .7);
+        }
+    }
+
+    @media (min-width: 576px) {
+        .getintouch{
+            width: max-content; 
         }
     }
 }

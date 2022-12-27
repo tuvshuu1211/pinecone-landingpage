@@ -8,10 +8,11 @@ header.header-navbar{
     
     .main-navbar{
         width: 100%;
-        padding: 5rem 0;
+        height: $navbar-height;
 
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         .navbar-items{
             list-style: none;
@@ -21,13 +22,13 @@ header.header-navbar{
 
             li{
                 font-size: 1.25rem;
+                font-weight: 500;
             }
         }
     }
 
     @media(max-width: 576px){
         .main-navbar{
-            padding: 2rem 0;
 
             .navbar-brand{
                 width: 120px;

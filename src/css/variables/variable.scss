@@ -3,6 +3,12 @@
     --black: #050505;
     --primary: #5CC857;
     --secondary: #4280F5;
+
+    --nvHeight: 80px;
+    
+    @media(min-width: 576px) {
+        --nvHeight: 188px;
+    }
 }
 
 $white: var(--white);
@@ -20,3 +26,6 @@ $font-xxl: calc(1rem + 1.5vw);
 $font-xl: calc(1rem + .75vw);
 $font-lg: calc(1rem + .33vw);
 $font-md: calc(1rem + 0vw);
+
+//Size
+$navbar-height: var(--nvHeight)

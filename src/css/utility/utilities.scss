@@ -2,3 +2,56 @@
 .text-mask{
     overflow: hidden;
 }
+
+.text-center{
+    text-align: center;
+}
+
+[data-splitting]{
+    color: transparent;
+    overflow: hidden;
+    .char{
+        position: relative;
+        &::after{
+            content: attr(data-char);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: white;
+            transform: translateY(0);
+            transition: transform 1s cubic-bezier(.82,.03,.42,.99);
+            transition-delay: calc(var(--char-index) * 0.1s);
+        }
+    }
+    &.hide{
+        .char{
+            &::after{
+                transform: translateY(100%);
+            }
+        }
+    }
+}
+
+.title-hover{
+    a{
+        position: relative;
+        color: rgba(255,255,255,.7);
+        width: max-content;
+        &::before{
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            z-index: -10;
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path .4s cubic-bezier(.455,.03,.515,.955);
+            will-change: clip-path;
+        }
+    }
+    &:hover{
+        a{
+            &::before{
+                clip-path: inset(0 0 0 0);
+            }
+        }
+    }
+}
