@@ -470,7 +470,7 @@ function mainPage(){
         logoText.animation.loop = false
         const geometry = new THREE.PlaneGeometry( 4.56, 1, 1, 1 );
         const material = new THREE.MeshBasicMaterial( { map: logoText, transparent: true } );
-        mesh = new THREE.Mesh( geometry, material );
+        const mesh = new THREE.Mesh( geometry, material );
         mesh.scale.set(logoTextScale, logoTextScale, logoTextScale)
         mesh.position.set(0, 0.15, 0)
         heroGroup.add( mesh );
