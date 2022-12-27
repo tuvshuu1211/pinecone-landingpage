@@ -46,6 +46,7 @@ let textGeometry = null
 let canvas, scene, renderer, camera;
 let glassMaterial, glassMaterial2, shaderReflect, welcomeGroup, cameraGroup, heroGroup;
 let cubeRenderTarget, cubeCamera;
+let directionalLight, directionalLight2;
 const objectsDistance = 4
 let locoScroll, scrollContainer, scrollY = 0;
 const clock = new THREE.Clock()
