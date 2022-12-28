@@ -1,0 +1,28 @@
+{
+    "career":[
+        {
+            "title": "UX/UI Designer",
+            "department": "Design team",
+            "company": "Pinecone studio",
+            "time": "Fulltime",
+            "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus dolores necessitatibus magni sunt omnis numquam aliquid, hic quidem voluptas tempora!",
+            "link": "#"
+        },
+        {
+            "title": "Software Engineer",
+            "department": "Development team",
+            "company": "Pinecone studio",
+            "time": "Fulltime",
+            "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus dolores necessitatibus magni sunt omnis numquam aliquid, hic quidem voluptas tempora!",
+            "link": "#"
+        },
+        {
+            "title": "Sofware Teacher",
+            "department": "Academy",
+            "company": "Pinecone Academy",
+            "time": "Fulltime",
+            "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus dolores necessitatibus magni sunt omnis numquam aliquid, hic quidem voluptas tempora!",
+            "link": "#"
+        }
+    ]
+}

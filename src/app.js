@@ -8,6 +8,8 @@ import Mouse from './js/Mouse'
 import locomotiveScroll from "locomotive-scroll";
 import ImagesLoaded from 'imagesloaded'
 import Splitting from 'splitting'
+import { getCareer } from './js/GetData'
+import generatejob from './js/GenerateJob'
 
 import {gsap} from "gsap";
 import { ScrollTrigger } from 'gsap/all';
@@ -118,7 +120,10 @@ if(location === 'home'){
     tick()
 }else if(location === 'career'){
     init()
-    career()
+    getCareer('/static/data.json')
+        .then(generatejob)
+        .then(locoScroll.update())
+        .finally(career())
     tick()
 }else if(location === 'contact'){
     init()
@@ -208,7 +213,7 @@ function scrollInit(){
             smooth: true,
         }
     })
-    
+    locoScroll.scrollTo(0, 0)
     locoScroll.stop()
 
     locoScroll.on("scroll", ScrollTrigger.update);
@@ -309,7 +314,7 @@ function career(){
     welcomeGroup = new THREE.Group()
     welcomeGroup.position.y = -1.5
     welcomeGroup.position.z = -5
-    welcomeGroup.position.x = -0.45
+    welcomeGroup.position.x = -0
     welcomeGroup.rotation.y = -5 * (Math.PI / 180)
     welcomeGroup.rotation.x = 10 * (Math.PI / 180)
     scene.add(welcomeGroup)
