@@ -238,16 +238,23 @@
     @media(max-width: 576px){
         .pinecone-moto{
             width: 100%;
-            font-size: calc($display-font2 * 0.65);
+            max-width: 300px;
+            font-size: calc($display-font3 * 1.15);
 
             .mask-text{
-                height: calc($display-font2 * 0.65)
+                height: calc($display-font3 * 1.15)
             }
         }
 
         .pineconers-content{
+            .pineconers-scene{
+                perspective-origin: 50% 30%;
+                .pineconers-element{
+                    width: 160%;
+                }
+            }
             .piny-img{
-                width: 400px;
+                width: 200px;
             }
         }
     }

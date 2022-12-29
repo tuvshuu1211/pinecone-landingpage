@@ -2,38 +2,86 @@
     width: 100%;
     height: 100vh;
     font-family: 'Pinecone';
+    padding-top: calc($navbar-height);
+    position: relative;
+
     display: flex;
-    justify-content: center;
-    text-align: center;
-    padding-top: 10%;
+    flex-direction: column;
+    justify-content: space-between;
 
     .footer-heading{
-        font-size: calc($display-font3 / 1.75);
+        font-size: calc($font-xl * 1.25);
         text-transform: uppercase;
+        max-width: 600px;
+        margin: 0 auto;
         h2{
             font-weight: 100;
             margin: 0;
-            line-height: calc($display-font3);
+            font-weight: 600;
             span{
                 position: relative;
                 display: block;
                 transform: translateY(100%);
             }
             &.highlight{
-                font-weight: 600;
                 color: $primary;
             }
         }
+        
     }
 
     @media(max-width: 576px){
         align-items: center;
+        // height: 75vh;
         .footer-heading{
-            transform: translateY(-100%);
-            font-size: calc($display-font3);
+            transform: translateY(100%);
+            font-size: calc($font-xl);
+            max-width: 300px;
             h2{
-                line-height: calc($display-font3 * 1.5)
+                line-height: calc($font-xl * 1.5)
             }
+        }
+    }
+}
+
+.footer{
+    width: 100%;
+    // margin-top: calc($navbar-height * 0.25);
+    
+    &-content{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 1rem;
+
+        border-top: 2px solid rgba($color: white, $alpha: .1);
+        padding: calc($navbar-height / 4) 0;
+        width: 100%;
+        
+        font-size: $font-md;
+
+        .copyright{
+            opacity: .5;
+        }
+        .social-links{
+            list-style: none;
+            display: flex;
+            align-items: flex-end;
+            gap: $font-xl;
+            // font-size: $font-lg;
+
+
+            li{
+                padding: 0 1rem;
+                &:last-child{
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+    @media (min-width: 576px) {
+        &-content{
+            flex-direction: row;
         }
     }
 }

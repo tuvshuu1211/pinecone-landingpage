@@ -36,25 +36,28 @@
                 <ul class="contact-hero__information">
                     <li>
                         <p>Project</p>
-                        <div class="contact-email title-hover">
-                            <a data-text="work@pinecone.mn">
-                                work@pinecone.mn
+                        <div class="contact-email title-hover tooltip" id="copytext">
+                            <span class="tooltiptext">Click to copy</span>
+                            <a data-text="sales@pinecone.mn" onclick="copyText(this)">
+                                sales@pinecone.mn
                             </a>
                         </div>
                     </li>
                     <li>
                         <p>Career</p>
-                        <div class="contact-email title-hover">
-                            <a data-text="job@pinecone.mn">
-                                job@pinecone.mn
+                        <div class="contact-email title-hover tooltip" id="copytext">
+                            <span class="tooltiptext">Click to copy</span>
+                            <a data-text="hr@pinecone.mn" onclick="copyText(this)">
+                                hr@pinecone.mn
                             </a>
                         </div>
                     </li>
                     <li>
                         <p>Academy</p>
-                        <div class="contact-email title-hover">
-                            <a data-text="academy@pinecone.mn">
-                                academy@pinecone.mn
+                        <div class="contact-email title-hover tooltip" id="copytext">
+                            <span class="tooltiptext">Click to copy</span>
+                            <a data-text="info@pinecone.mn" onclick="copyText(this)">
+                                info@pinecone.mn
                             </a>
                         </div>
                     </li>
@@ -63,18 +66,49 @@
                 <div class="getintouch">
                     <p>Get in touch</p>
                     <h2 class="title-hover">
-                        <a href="tel:+976 98119942" data-text="+976 9811 8842">+976 9811 8842</a>
+                        <a href="tel:+976 98119942" data-text="+976 7270 0800">+976 7270 0800</a>
                     </h2>
                     <address>
-                        Салбар 2: Сансарын Имарт-ын ард, Сөүл бизнес төв, 3 давхар
+                        Gurvan gal Office center, 4th floor,
+                        Chinggis Avenue, Sukhbaatar District 14240, Ulaanbaatar, Mongolia
                     </address>
                 </div>
             </div>
         </div>
     </section>
 
-        
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    <p>© 2022 Pinecone LLC</p>
+                </div>
+
+                <ul class="social-links">
+                    <li class="title-hover"><a data-text="Facebook" href="#">Facebook</a></li>
+                    <li class="title-hover"><a data-text="Instagram" href="#">Instagram</a></li>
+                    <li class="title-hover"><a data-text="Linkedin" href="#">Linkedin</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </footer>
     </main>
+
+    <script>
+        function copyText(this_id) {
+
+            const message = this_id.parentElement.children[0]
+
+            navigator.clipboard.writeText(this_id.dataset.text);
+
+            message.innerHTML = 'Copied'
+
+            setTimeout(() => {
+                message.innerHTML = 'Click to copy'
+            }, 2000);
+        }
+    </script>
     <script type="module" src="app.js"></script>
 </body>
 </html>

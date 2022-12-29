@@ -19,7 +19,7 @@ function generateJob(datas){
             </div>
         </div>
         <div class="career-list__desc">
-            <p>${jobs[i].decsription}</p>
+            <p>${jobs[i].description}</p>
             <a href="${jobs[i].link}" class="btn btn-light">Apply</a>
         </div>
     </li>

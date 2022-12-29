@@ -79,7 +79,11 @@ const environmentMap = cubeTextureLoader.load([
     '/static/environmentMaps/new/ny.jpg',
     '/static/environmentMaps/new/pz.jpg',
     '/static/environmentMaps/new/nz.jpg'
-])
+],
+()=>{
+    isLoading = false
+    preloader()
+});
 
 /**
  * Sizes
@@ -106,7 +110,7 @@ window.addEventListener('mousemove', (e)=>{
 
     if(logoObj !== null){
         logoObj.rotation.x += (mouse.x / (sizes.width * 0.5))  
-        logoObj.rotation.z += (mouse.y / (sizes.height* 0.5)) 
+        logoObj.rotation.z += (mouse.y / (sizes.height * 0.5)) 
     }
 })
 
@@ -244,7 +248,7 @@ function scrollInit(){
 
 function preloader(){
     if(location === 'home'){
-        const imgs = document.querySelectorAll('img')
+        const imgs = document.querySelectorAll('img, video')
         const counterText = document.querySelector("#preloader .counter h2")
         new ImagesLoaded(imgs,{background: true}, function(){
     
@@ -374,9 +378,16 @@ function career(){
 function mainPage(){
     //Welcome Group
     welcomeGroup = new THREE.Group()
-    welcomeGroup.position.y = -65.5
+    const envHeight = (locoScroll.el.clientHeight / sizes.height) * 10
+    console.log(envHeight)
+    // if(sizes.width > 576){
+        
+    // }else{
+    //     welcomeGroup.position.y = -72
+    // }
+    welcomeGroup.position.y = -(envHeight + objectsDistance)
     welcomeGroup.position.z = -4
-    welcomeGroup.position.x = -.5
+    welcomeGroup.position.x = -0
     welcomeGroup.rotation.y = -25 * (Math.PI / 180)
     welcomeGroup.rotation.z = -5 * (Math.PI / 180)
     scene.add(welcomeGroup)
@@ -439,10 +450,8 @@ function mainPage(){
             logoObj.position.set(0, 0, 1)
             logoObj.scale.set(0.0, 0.0, 0.0)
             heroGroup.add(logoObj)
-            isLoading = false
 
             setTimeout(()=>{
-                preloader()
                 heroScroll()
             }, 1000)
         }
@@ -508,11 +517,11 @@ function mainPage(){
                         scrub: 1,
                         start: "top+=30% bottom",
                         end: 'center center-=10%',
-                        ease: 'ease',
+                        // ease: 'ease',
                     },
                 })
-                tl.set('.pinecone-footer .text-mask span', { y: '100%'})
-                tl.to(welcomeGroup.rotation, { z: 0, onStart: ()=> gsap.to('.pinecone-footer .text-mask span', { y: '0%', stagger: .3}) })
+                tl.to(welcomeGroup.rotation, { z: 0 },0)
+                tl.to('.pinecone-footer .text-mask span', { y: '0%', stagger: .3},0)
                 
             }, 2000)
 
@@ -588,6 +597,8 @@ function onWindowResize() {
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    locoScroll.update()
 
 }
 
