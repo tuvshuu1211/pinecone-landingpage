@@ -19,25 +19,31 @@
     }
 }
 
+.our-culture{
+    background-color: rgba($color: #000000, $alpha: 0);
+}
+
 .engineer-driven, .human-centric{
-    // background-color: $black;
     display: flex;
     align-items: center;
     .section-inner{
         &__body{
             width: 80%;
-            display: flex;
-            justify-content: space-between;
+            // display: flex;
+            justify-content: end;
 
             margin: 0 auto;
         }
         &__heading{
-            text-transform: uppercase;
-            width: 40%;
-            transform: translateY(-100%);
+            text-transform: uppercase;;
+            font-size: calc($display-font3 * 0.75);
+            // transform: translateY(-100%);
         }
         &__content{
-            width: 40%;
+            width: 80%;
+            font-size: $font-xl;
+            line-height: calc($font-xl * 1.125);
+            letter-spacing: 1px;
         }
     }
     @media(max-width: 576px){
@@ -47,9 +53,8 @@
                 flex-direction: column;
             }
             &__heading{
-                transform: translateY(-50%);
                 width: 100%;
-                order: -1;
+                font-size: 2rem;
             }
             &__content{
                 width: 100%;
@@ -58,16 +63,19 @@
     }
 }
 
+.engineer-driven{
+    padding-bottom: 33vh;
+}
+
 .human-centric{
+    padding-top: 33vh;
     .section-inner{
         &__heading{
-            width: 30%;
-            transform: translateY(-100%);
-            order: 2;
+            width: 60%;
+            line-height: 90%;
         }
         &__content{
-            width: 40%;
-            order: 1;
+            width: 50%;
         }
     }
     @media(max-width: 576px){
@@ -77,9 +85,38 @@
                 flex-direction: column;
             }
             &__heading{
-                transform: translateY(-50%);
+                // transform: translateY(-50%);
                 width: 100%;
-                order: -1;
+            }
+            &__content{
+                width: 100%;
+            }
+        }
+    }
+}
+.engineer-driven{
+    // padding-top: 33vh;
+    .section-inner{
+        &__heading{
+            margin-left: auto;
+            text-align: right;
+            width: 60%;
+            line-height: 90%;
+        }
+        &__content{
+            margin-left: auto;
+            text-align: right;
+            width: 50%;
+        }
+    }
+    @media(max-width: 576px){
+        .section-inner{
+            &__body{
+                width: 100%;
+                flex-direction: column;
+            }
+            &__heading{
+                width: 100%;
             }
             &__content{
                 width: 100%;
@@ -137,17 +174,19 @@
         span{
             position: relative;
             overflow: hidden;
-            display: inline-block;
-            margin-right: .5rem;
+            
             &::after{
                 position: absolute;
                 left: 0;
                 right: 0;
+                visibility: visible !important;
                 content: attr(data-word);
+                opacity: 0;
                 color: white;
-                transform: translateY(120%);
-                transition: transform 1s cubic-bezier(.82,.03,.42,.99);
-                transition-delay: calc(var(--line-index) * 0.15s);
+                transform-origin: left top;
+                transform: translateY(200%);
+                transition: transform 1.25s cubic-bezier(.36,.04,.3,1.05);
+                transition-delay: calc(var(--line-index) * 0.125s);
             }
         }
     }
@@ -156,6 +195,7 @@
             span{
                 &::after{
                     transform: translateY(0%);
+                    opacity: 1;
                 }
             }
         }
@@ -277,7 +317,7 @@
             &__meta{
                 list-style: none;
                 display: flex;
-                justify-content: space-between;
+                gap: 2rem;
                 margin-bottom: 2rem;
                 opacity: .5;
             }
@@ -332,6 +372,7 @@
         h2{
             font-size: $font-xxl;
             margin-bottom: $font-xxl;
+            font-weight: 400;
         }
         address{
             max-width: 250px;
@@ -347,4 +388,9 @@
             width: max-content; 
         }
     }
+}
+
+.page-hero{
+    margin-top: calc($navbar-height * 1.5);
+    padding-bottom: $navbar-height;
 }

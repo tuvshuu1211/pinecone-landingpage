@@ -24,6 +24,8 @@ img{
     max-width: 100%;
 }
 
+
+
 html,
 body
 {
@@ -52,6 +54,7 @@ main{
     top: 0;
     left: 0;
     outline: none;
+    mix-blend-mode: screen;
 }
 
 .section

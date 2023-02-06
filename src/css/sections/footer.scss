@@ -61,7 +61,14 @@
         font-size: $font-md;
 
         .copyright{
-            opacity: .5;
+            p{
+                opacity: .5;
+            }
+            ul{
+                list-style: none;
+            }
+            display: flex;
+            gap: 2rem;
         }
         .social-links{
             list-style: none;

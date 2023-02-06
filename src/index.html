@@ -5,14 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Pinecone LLC</title>
-    <link rel="stylesheet" href="css/scroll.css">
-    <link rel="stylesheet" href="css/style.scss">
+
+    <meta property="og:title" content="Pinecone LLC" />
+    <meta property="og:desciprion" content="Create a Zero-Loss future through Lifestyle engineering." />
+    <meta property="og:type" content="Landing page" />
+    <meta property="og:url" content="https://www.pinecone.mn" />
+    <meta property="og:image" content="./images/og-image.jpg" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./images/favicon/site.webmanifest">
+
+    <link rel="stylesheet" href="./css/scroll.css">
+    <link rel="stylesheet" href="./css/style.scss">
 </head>
 <body>
     <div id="preloader">
         <div class="counter">
-            <h2></h2>
-            <hr>
+            <h2 class="text-mask">0%</h2>
+            <div class="loader">
+                <span></span>
+            </div>
         </div>
     </div>
     <canvas class="webgl"></canvas>
@@ -25,10 +39,10 @@
 
                 <ul class="navbar-items">
                     <li class="navbar-item title-hover">
-                        <a data-text="Career" href="career.html">Career</a>
+                        <a data-text="Career" href="career">Career</a>
                     </li>
                     <li class="navbar-item title-hover">
-                        <a data-text="Contact us" href="contact.html">Contact us</a>
+                        <a data-text="Contact us" href="contact">Contact us</a>
                     </li>
                 </ul>
             </nav>
@@ -36,7 +50,7 @@
     </header>
     <main data-scroll-container class="smooth-scroll">
     
-        <section id="hero" class="section">
+        <section id="hero" class="section" data-scroll="">
             <div class="container">
                 <div class="hero-inner">
                     <div class="hero-inner__body">
@@ -62,8 +76,8 @@
             </div>
         </section>
 
-        <section class="section showreel" data-scroll data-scroll-offset="-60%" data-scroll-repeat="true">
-            <div class="container">
+        <section class="section" data-scroll data-scroll-offset="0%" >
+            <div class="container showreel">
                 <div class="section-inner">
                     <div class="section-inner__body">
                         <div class="section-inner__content">
@@ -79,29 +93,32 @@
                 </div>
             </div>
         </section>
-        <section  class="section human-centric"  >
-            <div class="container">
-                <div class="section-inner">
-                    <div class="section-inner__body">
-                        <h2 class="section-inner__heading" >Human-centric culture</h2>
-                        <p class="section-inner__content" >
-                            With human-centered culture, we can enable unlimited human potential to create innovative solution with growth and where everyone's voices are heard.
-                        </p>
+
+        <section class="our-culture">
+            <section  class="section human-centric"  data-scroll data-scroll-offset="30%">
+                <div class="container">
+                    <div class="section-inner">
+                        <div class="section-inner__body" data-splitting="lines">
+                            <h2 class="section-inner__heading" >Human-centric culture</h2>
+                            <p class="section-inner__content">
+                                With human centered culture, we can enable unlimited human potential to create innovative solution with growth and where everyone's voices are heard.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <section  class="section engineer-driven"  >
-            <div class="container">
-                <div class="section-inner">
-                    <div class="section-inner__body">
-                        <h2 class="section-inner__heading" >Engineer-driven environment</h2>
-                        <p class="section-inner__content" >
-                            Pinecone creates a space for a self-initiated problem solving.
-                        </p>
+            </section>
+            <section  class="section engineer-driven"  data-scroll data-scroll-offset="30%">
+                <div class="container">
+                    <div class="section-inner">
+                        <div class="section-inner__body" data-splitting="lines">
+                            <h2 class="section-inner__heading" >Engineer-driven environment</h2>
+                            <p class="section-inner__content">
+                                Pinecone creates a space for a self-initiated problem solving.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </section>
         <section class="section pineconers">
             <div class="container">
@@ -174,12 +191,15 @@
                     <div class="footer-content">
                         <div class="copyright">
                             <p>© 2022 Pinecone LLC</p>
+                            <ul class="footer-nav">
+                                <li class="title-hover"><a data-text="Privacy" href="privacy">Privacy</a></li>
+                            </ul>
                         </div>
     
                         <ul class="social-links">
-                            <li class="title-hover"><a data-text="Facebook" href="#">Facebook</a></li>
-                            <li class="title-hover"><a data-text="Instagram" href="#">Instagram</a></li>
-                            <li class="title-hover"><a data-text="Linkedin" href="#">Linkedin</a></li>
+                            <li class="title-hover"><a data-text="Facebook" href="https://www.facebook.com/pineconestudiomn">Facebook</a></li>
+                            <li class="title-hover"><a data-text="Instagram" href="https://www.instagram.com/lifeatpinecone/">Instagram</a></li>
+                            <li class="title-hover"><a data-text="Linkedin" href="https://www.linkedin.com/company/pineconeacademy/mycompany/">Linkedin</a></li>
                         </ul>
                     </div>
     

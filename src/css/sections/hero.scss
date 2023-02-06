@@ -111,7 +111,12 @@
                 span{
                     display: block;
                     hyphens:auto;
-                    transform: translateY(100%);
+                    transform: translateX(100%);
+                }
+                &:nth-child(2){
+                    span{
+                        transform: translateX(-100%);
+                    }
                 }
             }
 
@@ -151,20 +156,26 @@
 // Career page
 
 .career-hero{
-    height: 80vh;
+    height: 90vh;
     &__body{
-        margin-top: $navbar-height;
-        padding-top: calc($navbar-height * 0.5);
-
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: calc($navbar-height - 1rem);
+        text-align: center;
         .section-title{
-            font-size: calc($display-font3 * 1.25);
-            text-align: center;
+            font-size: calc($display-font3 * 0.75 ) !important;
+            font-weight: 500;
 
-            text-transform: uppercase;
+            // text-transform: uppercase;
             span{
-                display: block;
+                // display: block;
                 color: $primary;
             }
+        }
+        .section-subcaption{
+            font-weight: 400;
+            opacity: .6;
+            margin-top: 1rem;
         }
     }
     @media (min-width: 576px) {

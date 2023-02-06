@@ -11,6 +11,11 @@ import Splitting from 'splitting'
 import { getCareer } from './js/GetData'
 import generatejob from './js/GenerateJob'
 
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
+import { BokehShader, BokehDepthShader } from 'three/examples/jsm/shaders/BokehShader2';
+
 import {gsap} from "gsap";
 import { ScrollTrigger } from 'gsap/all';
 gsap.registerPlugin(ScrollTrigger);
@@ -29,10 +34,12 @@ let location = 'home'
 
 if(window.location.pathname == '/' || window.location.pathname == '/index.html'){
     location = 'home'
-}else if(window.location.pathname == '/career.html'){
+}else if(window.location.pathname == '/career' || window.location.pathname == '/career.html'){
     location = 'career'
-}else if(window.location.pathname == '/contact.html'){
+}else if(window.location.pathname == '/contact' || window.location.pathname == '/contact.html'){
     location = 'contact'
+}else if(window.location.pathname == '/privacy'){
+    location = 'privacy'
 }
 
 /**
@@ -42,10 +49,22 @@ let logoObj = null
 let logoText = null
 let engineer = null
 let footerEngineer = null
-let textGeometry = null
+let effectController = null
+let distance = 100;
 
 // Base
-let canvas, scene, renderer, camera;
+const postprocessing = { enabled: true };
+const shaderSettings = {
+    rings: 3,
+    samples: 4
+};
+
+const raycaster = new THREE.Raycaster();
+const target = new THREE.Vector3( 0, 20, - 50 );
+const planes = [];
+const leaves = 100;
+
+let canvas, scene, renderer, camera, materialDepth;
 let glassMaterial, glassMaterial2, shaderReflect, welcomeGroup, cameraGroup, heroGroup;
 let cubeRenderTarget, cubeCamera;
 let directionalLight, directionalLight2;
@@ -133,6 +152,9 @@ if(location === 'home'){
     init()
     contact()
     tick()
+}else if(location === 'privacy'){
+    locoScroll.update()
+    locoScroll.start()
 }
 
 function init(){
@@ -197,6 +219,97 @@ function init(){
     window.addEventListener('resize', onWindowResize)
 
     locoScroll.update()
+
+    //Post Processing
+    initPostprocessing();
+    renderer.autoClear = false;
+
+    effectController = {
+
+        enabled: true,
+        jsDepthCalculation: true,
+        shaderFocus: false,
+
+        fstop: 12.2,
+        maxblur: 0.70,
+
+        focalDepth: 13.2,
+        showFocus: false,
+        manualdof: false,
+        vignetting: false,
+        depthblur: true,
+
+        threshold: 1,
+        gain: 1.0,
+        bias: 0.5,
+        fringe: 1.15,
+
+        focalLength: 29,
+        noise: true,
+        pentagon: false,
+
+        dithering: 0
+
+    };
+
+    const matChanger = function () {
+
+        for ( const e in effectController ) {
+
+            if ( e in postprocessing.bokeh_uniforms ) {
+
+                postprocessing.bokeh_uniforms[ e ].value = effectController[ e ];
+
+            }
+
+        }
+
+        postprocessing.enabled = effectController.enabled;
+        postprocessing.bokeh_uniforms[ 'znear' ].value = camera.near;
+        postprocessing.bokeh_uniforms[ 'zfar' ].value = camera.far;
+        camera.setFocalLength( effectController.focalLength );
+
+    };
+
+    const depthShader = BokehDepthShader;
+
+    materialDepth = new THREE.ShaderMaterial( {
+        uniforms: depthShader.uniforms,
+        vertexShader: depthShader.vertexShader,
+        fragmentShader: depthShader.fragmentShader
+    } );
+
+    materialDepth.uniforms[ 'mNear' ].value = camera.near;
+    materialDepth.uniforms[ 'mFar' ].value = camera.far;
+
+    // const gui = new dat.GUI();
+    //     gui.add( effectController, 'enabled').onChange( matChanger );
+    //     gui.add( effectController, 'jsDepthCalculation').onChange( matChanger );
+    //     gui.add( effectController, 'shaderFocus').onChange( matChanger );
+    //     gui.add( effectController, 'focalDepth').min(0.0).max(200.0).step(0.1).listen().onChange( matChanger );
+        
+    //     gui.add( effectController, 'fstop').min(0.1).max(22.0).step(0.001).listen().onChange( matChanger );
+    //     gui.add( effectController, 'maxblur').min(0.0).max(5.0).step(0.025).listen().onChange( matChanger );
+    //     gui.add( effectController, 'showFocus').onChange( matChanger );
+    //     gui.add( effectController, 'manualdof').onChange( matChanger );
+    //     gui.add( effectController, 'vignetting').onChange( matChanger );
+        
+    //     gui.add( effectController, 'depthblur').onChange( matChanger );
+
+    //     gui.add( effectController, 'threshold').min(0.0).max(1.0).step(0.001).onChange( matChanger );
+    //     gui.add( effectController, 'gain').min(0.0).max(100.0).step(0.001).onChange( matChanger );
+    //     gui.add( effectController, 'bias').min(0.0).max(3.0).step(0.001).onChange( matChanger );
+    //     gui.add( effectController, 'bias').min(0.0).max(3.0).step(0.001).onChange( matChanger );
+    //     gui.add( effectController, 'fringe').min(0.0).max(3.0).step(0.001).onChange( matChanger );
+    //     gui.add( effectController, 'focalLength').min(0.0).max(35).step(1).onChange( matChanger );
+    //     gui.add( effectController, 'noise').onChange( matChanger );
+    //     gui.add( effectController, 'dithering').min(0.0).max(0.001).step(0.001).onChange( matChanger );
+    //     gui.add( effectController, 'pentagon').onChange( matChanger );
+    //     gui.add( shaderSettings, 'rings').min(1).max(8).step(1).onChange( matChanger );
+    //     gui.add( shaderSettings, 'samples').min(1.0).max(13).step(1).onChange( matChanger );
+    //     gui.open();
+
+    matChanger();
 }
 
 /**
@@ -210,8 +323,8 @@ function scrollInit(){
         el: scrollContainer,
         direction: 'vertical',
         smooth: true,
-        lerp: 0.05,
-        multiplier: .75,
+        lerp: 0.125,
+        // multiplier: .75,
         touchMultiplier: 10,
         smartphone: {
             smooth: true,
@@ -250,12 +363,14 @@ function preloader(){
     if(location === 'home'){
         const imgs = document.querySelectorAll('img, video')
         const counterText = document.querySelector("#preloader .counter h2")
+        const loadingBar = document.querySelector("#preloader .counter .loader span")
         new ImagesLoaded(imgs,{background: true}, function(){
     
             let counter = 0;
             let c = 0;
             let i = setInterval(function(){
                 counterText.innerHTML = c + "%";
+                loadingBar.style.width = c + "%";
             counter++;
             c++;
                 
@@ -265,9 +380,9 @@ function preloader(){
                 Splitting(); 
                 setTimeout(()=>{
                     counterText.classList.add('hide')
+                    gsap.to('#preloader .counter .loader ', { scaleX: 0, transformOrigin: 'left top', delay: .1, duration: 1, ease: 'power0.in', onComplete: ()=>pageStart() })
                     gsap.set('.hero-inner__subtext p', { opacity: 0, y: '50%', duration:1, })
-                    pageStart()
-                }, 700)
+                }, 1000)
             }
             }, 5);
             
@@ -282,15 +397,18 @@ function pageStart(){
     if(isLoading === !true){
         locoScroll.update()
         
-        gsap.to('#preloader', {opacity: 0, delay:.5, duration:1, ease: 'power0.out', onComplete: function(){
+        gsap.to('#preloader', {opacity: 0, duration:1, ease: 'power0.out', onComplete: function(){
             this.targets()[0].style.display = 'none'
             },
             onStart: ()=>{
                 if(location ==='home'){
-                    setTimeout(()=>{
+                    if(window.innerWidth > 576){
                         logoText.animation.play()
-                        inroHome().play()
-                    }, 200)
+                    }else{
+                        logoText.animation.firstFrame = 80
+                        logoText.animation.play()
+                    }
+                    inroHome().play()
                 }
             }
         })
@@ -301,13 +419,16 @@ function pageStart(){
 }
 
 function inroHome(){
-    preloaderTL.to(logoObj.scale, { x: logoScale, y: logoScale, z: logoScale, ease: 'expo.out', duration: 2}, .5)
-    preloaderTL.to(glassMaterial, { opacity: 1, duration:1, ease: 'linear'}, .75)
-    preloaderTL.fromTo(logoObj.rotation, {z: 180 * (Math.PI/180)}, { z: 20 * (Math.PI/180), duration:2, ease: 'expo.out'}, .5)
-    preloaderTL.to('.hero-inner__text span', { y:0, duration:2, stagger: 0.3, ease: 'expo.out', onComplete: ()=>{
+    const scene1 = .5;
+    const scene2 = scene1 - 0.125;
+
+    preloaderTL.to('.hero-inner__text span', { x:0, duration:2, stagger: 0.3, ease: 'expo.out', onComplete: ()=>{
         locoScroll.start()
-    }}, 1)
-    preloaderTL.to('.hero-inner__subtext p', { opacity: 1, y: 0, duration:2, stagger: 0.25, ease: 'expo.out'}, 1.5)
+    }}, scene2)
+    preloaderTL.to('.hero-inner__subtext p', { opacity: 1, y: 0, duration:2, stagger: 0.25, ease: 'expo.out'}, scene1)
+    preloaderTL.to(logoObj.scale, { x: logoScale, y: logoScale, z: logoScale, ease: 'expo.out', duration: 2}, scene2)
+    preloaderTL.to(glassMaterial, { opacity: 1, duration:1, ease: 'linear'}, scene2 + 0.25 )
+    preloaderTL.fromTo(logoObj.rotation, {z: 180 * (Math.PI/180)}, { z: 20 * (Math.PI/180), duration:2, ease: 'expo.out'}, scene2)
 
     return preloaderTL
 }
@@ -316,11 +437,11 @@ function career(){
 
     // // Welcome Group
     welcomeGroup = new THREE.Group()
-    welcomeGroup.position.y = -1.5
-    welcomeGroup.position.z = -5
+    welcomeGroup.position.y = -1
+    welcomeGroup.position.z = -4
     welcomeGroup.position.x = -0
-    welcomeGroup.rotation.y = -5 * (Math.PI / 180)
-    welcomeGroup.rotation.x = 10 * (Math.PI / 180)
+    welcomeGroup.rotation.y = -0 * (Math.PI / 180)
+    welcomeGroup.rotation.x = 15 * (Math.PI / 180)
     scene.add(welcomeGroup)
 
     RectAreaLightUniformsLib.init();
@@ -333,7 +454,7 @@ function career(){
     welcomeGroup.add( new RectAreaLightHelper( rectLight2 ) );
 
     const geoFloor = new THREE.BoxGeometry( 2000, 0.1, 2000 );
-    const matStdFloor = new THREE.MeshStandardMaterial( { color: 0xffffff, roughness: 0.45, metalness: .35 } );
+    const matStdFloor = new THREE.MeshStandardMaterial( { color: 0xffffff, roughness: 0.45, metalness: .35, side: THREE.DoubleSide } );
     const mshStdFloor = new THREE.Mesh( geoFloor, matStdFloor );
     mshStdFloor.position.set(0, -.55, 0)
     welcomeGroup.add( mshStdFloor );
@@ -379,17 +500,15 @@ function mainPage(){
     //Welcome Group
     welcomeGroup = new THREE.Group()
     const envHeight = (locoScroll.el.clientHeight / sizes.height) * 10
-    console.log(envHeight)
     // if(sizes.width > 576){
         
     // }else{
     //     welcomeGroup.position.y = -72
     // }
-    welcomeGroup.position.y = -(envHeight + objectsDistance)
-    welcomeGroup.position.z = -4
-    welcomeGroup.position.x = -0
-    welcomeGroup.rotation.y = -25 * (Math.PI / 180)
-    welcomeGroup.rotation.z = -5 * (Math.PI / 180)
+    welcomeGroup.position.y = -(envHeight + (objectsDistance - .7))
+    welcomeGroup.position.z = -5
+    welcomeGroup.position.x = -.25
+    welcomeGroup.rotation.y = -15 * (Math.PI / 180)
     scene.add(welcomeGroup)
 
     RectAreaLightUniformsLib.init();
@@ -479,7 +598,6 @@ function mainPage(){
         logoText.animation.autoplay = true
         logoText.animation.isPaused = true
         logoText.animation.setSpeed(1.5)
-        console.log(logoText);
         logoText.animation.firstFrame = 0
         logoText.animation.loop = false
         const geometry = new THREE.PlaneGeometry( 4.56, 1, 1, 1 );
@@ -520,7 +638,6 @@ function mainPage(){
                         // ease: 'ease',
                     },
                 })
-                tl.to(welcomeGroup.rotation, { z: 0 },0)
                 tl.to('.pinecone-footer .text-mask span', { y: '0%', stagger: .3},0)
                 
             }, 2000)
@@ -535,7 +652,6 @@ function mainPage(){
     generateGalaxy(objectsDistance, renderer, scene)
     Particle(renderer, welcomeGroup)
 
-
     /**
      * Lights
      */
@@ -543,7 +659,7 @@ function mainPage(){
     directionalLight2 = new THREE.DirectionalLight('#ffffff', .1)
     directionalLight.position.set(1, 2, 1)
     directionalLight2.position.set(3, 1, 2)
-    scene.add(directionalLight, directionalLight2)
+    // scene.add(directionalLight, directionalLight2)
 }
 
 function contact(){
@@ -577,7 +693,7 @@ function contact(){
     directionalLight2 = new THREE.DirectionalLight('#ffffff', .1)
     directionalLight.position.set(1, 2, 1)
     directionalLight2.position.set(3, 1, 2)
-    scene.add(directionalLight, directionalLight2)
+    // scene.add(directionalLight, directionalLight2)
 }
 
 /**
@@ -597,6 +713,13 @@ function onWindowResize() {
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    //Post Processing
+    postprocessing.rtTextureDepth.setSize( sizes.width, sizes.height );
+    postprocessing.rtTextureColor.setSize( sizes.width, sizes.height );
+
+    postprocessing.bokeh_uniforms[ 'textureWidth' ].value = sizes.width;
+    postprocessing.bokeh_uniforms[ 'textureHeight' ].value = sizes.height;
 
     locoScroll.update()
 
@@ -630,14 +753,17 @@ function heroScroll(){
 }
 
 function engineerAnimation(){
-    const engineerTL = gsap.timeline({paused: true})
-        engineerTL.to(engineer.position, {x: 1, z: -2})
-        engineerTL.to(engineer.rotation, {y: -45 * (Math.PI/180), x: 10 * (Math.PI/180)}, 0)
+    const engineerTL = gsap.timeline({
+        paused: true,
+        })
+        engineerTL.to('.our-culture', {duration: .1, backgroundColor: 'rgba(0, 0, 0, .65)'},0)
+        engineerTL.to(engineer.position, {x: 1, z: -2},.1)
+        engineerTL.to(engineer.rotation, {y: -45 * (Math.PI/180), x: 10 * (Math.PI/180)}, .1)
     const engineerDriven = gsap.timeline({
         scrollTrigger: {
           trigger: ".engineer-driven",
           scroller: scrollContainer,
-          start: "top-=80% center",
+          start: "top-=55% center",
           end: "bottom-=100% top",
           duration: 1,
           scrub: true,
@@ -671,6 +797,77 @@ function engineerAnimation(){
 }
 
 /**
+ * Post Processing
+ */
+function initPostprocessing() {
+
+    postprocessing.scene = new THREE.Scene();
+
+    postprocessing.camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 10000, 10000 );
+    postprocessing.camera.position.z = 100;
+
+    postprocessing.scene.add( postprocessing.camera );
+
+    postprocessing.rtTextureDepth = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight );
+    postprocessing.rtTextureColor = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight );
+
+    const bokeh_shader = BokehShader;
+
+    postprocessing.bokeh_uniforms = THREE.UniformsUtils.clone( bokeh_shader.uniforms );
+
+    postprocessing.bokeh_uniforms[ 'tColor' ].value = postprocessing.rtTextureColor.texture;
+    postprocessing.bokeh_uniforms[ 'tDepth' ].value = postprocessing.rtTextureDepth.texture;
+    postprocessing.bokeh_uniforms[ 'textureWidth' ].value = window.innerWidth;
+    postprocessing.bokeh_uniforms[ 'textureHeight' ].value = window.innerHeight;
+
+    postprocessing.materialBokeh = new THREE.ShaderMaterial( {
+
+        uniforms: postprocessing.bokeh_uniforms,
+        vertexShader: bokeh_shader.vertexShader,
+        fragmentShader: bokeh_shader.fragmentShader,
+        defines: {
+            RINGS: shaderSettings.rings,
+            SAMPLES: shaderSettings.samples
+        }
+
+    } );
+
+    postprocessing.quad = new THREE.Mesh( new THREE.PlaneGeometry( window.innerWidth, window.innerHeight ), postprocessing.materialBokeh );
+    postprocessing.quad.position.z = - 500;
+    postprocessing.scene.add( postprocessing.quad );
+
+}
+
+function shaderUpdate() {
+
+    postprocessing.materialBokeh.defines.RINGS = shaderSettings.rings;
+    postprocessing.materialBokeh.defines.SAMPLES = shaderSettings.samples;
+    postprocessing.materialBokeh.needsUpdate = true;
+
+}
+
+function linearize( depth ) {
+
+    const zfar = camera.far;
+    const znear = camera.near;
+    return - zfar * znear / ( depth * ( zfar - znear ) - zfar );
+
+}
+
+function smoothstep( near, far, depth ) {
+
+    const x = saturate( ( depth - near ) / ( far - near ) );
+    return x * x * ( 3 - 2 * x );
+
+}
+
+function saturate( x ) {
+
+    return Math.max( 0, Math.min( 1, x ) );
+
+}
+
+/**
  * Animate
  */
 function tick ()
@@ -687,12 +884,12 @@ function tick ()
     if(location === 'home'){
         cubeCamera.update(renderer, scene)
 
-        directionalLight.position.x = Math.sin(elapsedTime * 0.1)
-        directionalLight.position.y = Math.cos(elapsedTime * 0.1)
-        directionalLight.position.z = Math.sin(elapsedTime * 0.1)
-        directionalLight2.position.x = Math.cos(-elapsedTime * 0.1)
-        directionalLight2.position.y = Math.sin(-elapsedTime * 0.1)
-        directionalLight2.position.z = Math.cos(-elapsedTime * 0.1)
+        // directionalLight.position.x = Math.sin(elapsedTime * 0.1)
+        // directionalLight.position.y = Math.cos(elapsedTime * 0.1)
+        // directionalLight.position.z = Math.sin(elapsedTime * 0.1)
+        // directionalLight2.position.x = Math.cos(-elapsedTime * 0.1)
+        // directionalLight2.position.y = Math.sin(-elapsedTime * 0.1)
+        // directionalLight2.position.z = Math.cos(-elapsedTime * 0.1)
 
         shaderReflect.uniforms.time.value += 0.01;
         // mesh1.visible = true
@@ -710,6 +907,62 @@ function tick ()
     
     // Render
     renderer.render(scene, camera)
+    // postprocessing.composer.render( 0.1 );
+
+    camera.updateMatrixWorld();
+    if ( effectController.jsDepthCalculation ) {
+
+        raycaster.setFromCamera( mouse, camera );
+
+        const intersects = raycaster.intersectObjects( scene.children, true );
+
+        const targetDistance = ( intersects.length > 0 ) ? intersects[ 0 ].distance : 1000;
+
+        distance += ( targetDistance - distance ) * 0.03;
+
+        const sdistance = smoothstep( camera.near, camera.far, distance );
+
+        const ldistance = linearize( 1 - sdistance );
+
+        // postprocessing.bokeh_uniforms[ 'focalDepth' ].value = ldistance;
+
+        // effectController[ 'focalDepth' ] = ldistance;
+
+    }
+
+    if ( postprocessing.enabled && location === 'home' ) {
+
+        renderer.clear();
+
+        // render scene into texture
+
+        renderer.setRenderTarget( postprocessing.rtTextureColor );
+        renderer.clear();
+        renderer.render( scene, camera );
+
+        // render depth into texture
+
+        scene.overrideMaterial = materialDepth;
+        renderer.setRenderTarget( postprocessing.rtTextureDepth );
+        renderer.clear();
+        renderer.render( scene, camera );
+        scene.overrideMaterial = null;
+
+        // render bokeh composite
+
+        renderer.setRenderTarget( null );
+        renderer.render( postprocessing.scene, postprocessing.camera );
+
+
+    } else {
+
+        scene.overrideMaterial = null;
+
+        renderer.setRenderTarget( null );
+        renderer.clear();
+        renderer.render( scene, camera );
+
+    }
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)

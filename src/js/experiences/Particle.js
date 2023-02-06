@@ -27,7 +27,12 @@ export default function Particle(renderer, scene){
             0
             )
         scene.add(mesh)
-        gsap.to(material, {opacity: 0, repeat: -1, yoyo:true, duration: getRndInteger(1, 3)})
+        gsap.to(material, {
+            opacity: 0, 
+            repeat: -1, 
+            yoyo:true, 
+            duration: getRndInteger(2, 8)
+        })
     }
      
 }

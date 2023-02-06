@@ -9,7 +9,6 @@
 
 [data-splitting]{
     color: transparent;
-    overflow: hidden;
     .char{
         position: relative;
         &::after{
@@ -18,6 +17,7 @@
             left: 0;
             top: 0;
             color: white;
+            visibility: visible;
             transform: translateY(0);
             transition: transform 1s cubic-bezier(.82,.03,.42,.99);
             transition-delay: calc(var(--char-index) * 0.1s);

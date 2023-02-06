@@ -10,8 +10,8 @@ vec2 rotate(vec2 uv, float rotation, vec2 mid)
 }
 
 void main(){
-
-    vec2 rotateUV = rotate(gl_PointCoord, 3.14 * 0.25, vec2(0.5));
+    if (distance(gl_PointCoord, vec2(0.5)) > 0.4) discard;
+    vec2 rotateUV = rotate(gl_PointCoord, 3.14 * vTime, vec2(0.5));
     vec2 lightUvX = vec2( (rotateUV.x * 0.1) + 0.45,  rotateUV.y * 0.5 + 0.25 );
     float lightX = 0.015 / distance(lightUvX, vec2(0.5));
     

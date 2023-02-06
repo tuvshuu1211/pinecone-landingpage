@@ -2,16 +2,18 @@ import * as THREE from 'three'
 import galaxyVertex from '../../shader/galaxyVertex.glsl'
 import galaxyFragment from '../../shader/galaxyFragment.glsl'
 
+let particlesMaterial = null
+
 export default function generateGalaxy(objectsDistance, renderer, scene){
-    const particesCount = 5000
+    const particesCount = 1000
     const positions = new Float32Array(particesCount * 3)
     const colors = new Float32Array(particesCount * 3)
     const insideColor = new THREE.Color('#FE5943')
     const outsideColor = new THREE.Color('#FE5943')
     
     for(let i = 0; i < particesCount; i++){
-        positions[i * 3 + 0] = (Math.random() - 0.5) * 10
-        positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * objectsDistance * 10
+        positions[i * 3 + 0] = (Math.random() - 0.5) * 5
+        positions[i * 3 + 1] = (-objectsDistance * 2.25) - (Math.random() * objectsDistance * 5)
         positions[i * 3 + 2] = ((Math.random() - 0.5) * 5) + 3
     
         const radius = Math.random() * 5
@@ -29,7 +31,7 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     
     //Material
-    const particlesMaterial = new THREE.ShaderMaterial({
+    particlesMaterial = new THREE.ShaderMaterial({
         depthWrite: false,
             blending: THREE.AdditiveBlending,
             vertexColors: true,
@@ -37,7 +39,7 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
             fragmentShader:  galaxyFragment,
             uniforms:{
                 uBlink: { value: 1 },
-                uTime: { value: 30 },
+                uTime: { value: 80 },
                 uSize: {value: 30 * renderer.getPixelRatio() }
             }
     })
@@ -46,4 +48,15 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
     const particles = new THREE.Points(particlesGeometry, particlesMaterial)
     // particles.position.set(0, 0, 0)
     scene.add(particles)   
+}
+
+tick ()
+function tick ()
+{
+    if(particlesMaterial != null){
+        particlesMaterial.uniforms.uTime.value += 0.0025
+    }
+
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick)
 }
