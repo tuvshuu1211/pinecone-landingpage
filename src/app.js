@@ -53,16 +53,6 @@ let effectController = null
 let distance = 100;
 
 // Base
-const postprocessing = { enabled: true };
-const shaderSettings = {
-    rings: 3,
-    samples: 4
-};
-
-const raycaster = new THREE.Raycaster();
-const target = new THREE.Vector3( 0, 20, - 50 );
-const planes = [];
-const leaves = 100;
 
 let canvas, scene, renderer, camera, materialDepth;
 let glassMaterial, glassMaterial2, shaderReflect, welcomeGroup, cameraGroup, heroGroup;
@@ -220,96 +210,6 @@ function init(){
 
     locoScroll.update()
 
-    //Post Processing
-    initPostprocessing();
-    renderer.autoClear = false;
-
-    effectController = {
-
-        enabled: true,
-        jsDepthCalculation: true,
-        shaderFocus: false,
-
-        fstop: 12.2,
-        maxblur: 0.70,
-
-        focalDepth: 13.2,
-        showFocus: false,
-        manualdof: false,
-        vignetting: false,
-        depthblur: true,
-
-        threshold: 1,
-        gain: 1.0,
-        bias: 0.5,
-        fringe: 1.15,
-
-        focalLength: 29,
-        noise: true,
-        pentagon: false,
-
-        dithering: 0
-
-    };
-
-    const matChanger = function () {
-
-        for ( const e in effectController ) {
-
-            if ( e in postprocessing.bokeh_uniforms ) {
-
-                postprocessing.bokeh_uniforms[ e ].value = effectController[ e ];
-
-            }
-
-        }
-
-        postprocessing.enabled = effectController.enabled;
-        postprocessing.bokeh_uniforms[ 'znear' ].value = camera.near;
-        postprocessing.bokeh_uniforms[ 'zfar' ].value = camera.far;
-        camera.setFocalLength( effectController.focalLength );
-
-    };
-
-    const depthShader = BokehDepthShader;
-
-    materialDepth = new THREE.ShaderMaterial( {
-        uniforms: depthShader.uniforms,
-        vertexShader: depthShader.vertexShader,
-        fragmentShader: depthShader.fragmentShader
-    } );
-
-    materialDepth.uniforms[ 'mNear' ].value = camera.near;
-    materialDepth.uniforms[ 'mFar' ].value = camera.far;
-
-    // const gui = new dat.GUI();
-    //     gui.add( effectController, 'enabled').onChange( matChanger );
-    //     gui.add( effectController, 'jsDepthCalculation').onChange( matChanger );
-    //     gui.add( effectController, 'shaderFocus').onChange( matChanger );
-    //     gui.add( effectController, 'focalDepth').min(0.0).max(200.0).step(0.1).listen().onChange( matChanger );
-        
-    //     gui.add( effectController, 'fstop').min(0.1).max(22.0).step(0.001).listen().onChange( matChanger );
-    //     gui.add( effectController, 'maxblur').min(0.0).max(5.0).step(0.025).listen().onChange( matChanger );
-    //     gui.add( effectController, 'showFocus').onChange( matChanger );
-    //     gui.add( effectController, 'manualdof').onChange( matChanger );
-    //     gui.add( effectController, 'vignetting').onChange( matChanger );
-        
-    //     gui.add( effectController, 'depthblur').onChange( matChanger );
-
-    //     gui.add( effectController, 'threshold').min(0.0).max(1.0).step(0.001).onChange( matChanger );
-    //     gui.add( effectController, 'gain').min(0.0).max(100.0).step(0.001).onChange( matChanger );
-    //     gui.add( effectController, 'bias').min(0.0).max(3.0).step(0.001).onChange( matChanger );
-    //     gui.add( effectController, 'bias').min(0.0).max(3.0).step(0.001).onChange( matChanger );
-    //     gui.add( effectController, 'fringe').min(0.0).max(3.0).step(0.001).onChange( matChanger );
-    //     gui.add( effectController, 'focalLength').min(0.0).max(35).step(1).onChange( matChanger );
-    //     gui.add( effectController, 'noise').onChange( matChanger );
-    //     gui.add( effectController, 'dithering').min(0.0).max(0.001).step(0.001).onChange( matChanger );
-    //     gui.add( effectController, 'pentagon').onChange( matChanger );
-    //     gui.add( shaderSettings, 'rings').min(1).max(8).step(1).onChange( matChanger );
-    //     gui.add( shaderSettings, 'samples').min(1.0).max(13).step(1).onChange( matChanger );
-    //     gui.open();
-
-    matChanger();
 }
 
 /**
@@ -714,13 +614,6 @@ function onWindowResize() {
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-    //Post Processing
-    postprocessing.rtTextureDepth.setSize( sizes.width, sizes.height );
-    postprocessing.rtTextureColor.setSize( sizes.width, sizes.height );
-
-    postprocessing.bokeh_uniforms[ 'textureWidth' ].value = sizes.width;
-    postprocessing.bokeh_uniforms[ 'textureHeight' ].value = sizes.height;
-
     locoScroll.update()
 
 }
@@ -797,77 +690,6 @@ function engineerAnimation(){
 }
 
 /**
- * Post Processing
- */
-function initPostprocessing() {
-
-    postprocessing.scene = new THREE.Scene();
-
-    postprocessing.camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 10000, 10000 );
-    postprocessing.camera.position.z = 100;
-
-    postprocessing.scene.add( postprocessing.camera );
-
-    postprocessing.rtTextureDepth = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight );
-    postprocessing.rtTextureColor = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight );
-
-    const bokeh_shader = BokehShader;
-
-    postprocessing.bokeh_uniforms = THREE.UniformsUtils.clone( bokeh_shader.uniforms );
-
-    postprocessing.bokeh_uniforms[ 'tColor' ].value = postprocessing.rtTextureColor.texture;
-    postprocessing.bokeh_uniforms[ 'tDepth' ].value = postprocessing.rtTextureDepth.texture;
-    postprocessing.bokeh_uniforms[ 'textureWidth' ].value = window.innerWidth;
-    postprocessing.bokeh_uniforms[ 'textureHeight' ].value = window.innerHeight;
-
-    postprocessing.materialBokeh = new THREE.ShaderMaterial( {
-
-        uniforms: postprocessing.bokeh_uniforms,
-        vertexShader: bokeh_shader.vertexShader,
-        fragmentShader: bokeh_shader.fragmentShader,
-        defines: {
-            RINGS: shaderSettings.rings,
-            SAMPLES: shaderSettings.samples
-        }
-
-    } );
-
-    postprocessing.quad = new THREE.Mesh( new THREE.PlaneGeometry( window.innerWidth, window.innerHeight ), postprocessing.materialBokeh );
-    postprocessing.quad.position.z = - 500;
-    postprocessing.scene.add( postprocessing.quad );
-
-}
-
-function shaderUpdate() {
-
-    postprocessing.materialBokeh.defines.RINGS = shaderSettings.rings;
-    postprocessing.materialBokeh.defines.SAMPLES = shaderSettings.samples;
-    postprocessing.materialBokeh.needsUpdate = true;
-
-}
-
-function linearize( depth ) {
-
-    const zfar = camera.far;
-    const znear = camera.near;
-    return - zfar * znear / ( depth * ( zfar - znear ) - zfar );
-
-}
-
-function smoothstep( near, far, depth ) {
-
-    const x = saturate( ( depth - near ) / ( far - near ) );
-    return x * x * ( 3 - 2 * x );
-
-}
-
-function saturate( x ) {
-
-    return Math.max( 0, Math.min( 1, x ) );
-
-}
-
-/**
  * Animate
  */
 function tick ()
@@ -879,17 +701,8 @@ function tick ()
     // Update controls
     // controls.update()
     
-    
-    
     if(location === 'home'){
         cubeCamera.update(renderer, scene)
-
-        // directionalLight.position.x = Math.sin(elapsedTime * 0.1)
-        // directionalLight.position.y = Math.cos(elapsedTime * 0.1)
-        // directionalLight.position.z = Math.sin(elapsedTime * 0.1)
-        // directionalLight2.position.x = Math.cos(-elapsedTime * 0.1)
-        // directionalLight2.position.y = Math.sin(-elapsedTime * 0.1)
-        // directionalLight2.position.z = Math.cos(-elapsedTime * 0.1)
 
         shaderReflect.uniforms.time.value += 0.01;
         // mesh1.visible = true
@@ -907,63 +720,6 @@ function tick ()
     
     // Render
     renderer.render(scene, camera)
-    // postprocessing.composer.render( 0.1 );
-
-    camera.updateMatrixWorld();
-    if ( effectController.jsDepthCalculation ) {
-
-        raycaster.setFromCamera( mouse, camera );
-
-        const intersects = raycaster.intersectObjects( scene.children, true );
-
-        const targetDistance = ( intersects.length > 0 ) ? intersects[ 0 ].distance : 1000;
-
-        distance += ( targetDistance - distance ) * 0.03;
-
-        const sdistance = smoothstep( camera.near, camera.far, distance );
-
-        const ldistance = linearize( 1 - sdistance );
-
-        // postprocessing.bokeh_uniforms[ 'focalDepth' ].value = ldistance;
-
-        // effectController[ 'focalDepth' ] = ldistance;
-
-    }
-
-    if ( postprocessing.enabled && location === 'home' ) {
-
-        renderer.clear();
-
-        // render scene into texture
-
-        renderer.setRenderTarget( postprocessing.rtTextureColor );
-        renderer.clear();
-        renderer.render( scene, camera );
-
-        // render depth into texture
-
-        scene.overrideMaterial = materialDepth;
-        renderer.setRenderTarget( postprocessing.rtTextureDepth );
-        renderer.clear();
-        renderer.render( scene, camera );
-        scene.overrideMaterial = null;
-
-        // render bokeh composite
-
-        renderer.setRenderTarget( null );
-        renderer.render( postprocessing.scene, postprocessing.camera );
-
-
-    } else {
-
-        scene.overrideMaterial = null;
-
-        renderer.setRenderTarget( null );
-        renderer.clear();
-        renderer.render( scene, camera );
-
-    }
-
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }

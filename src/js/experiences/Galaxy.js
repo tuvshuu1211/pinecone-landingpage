@@ -8,13 +8,13 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
     const particesCount = 1000
     const positions = new Float32Array(particesCount * 3)
     const colors = new Float32Array(particesCount * 3)
-    const insideColor = new THREE.Color('#FE5943')
-    const outsideColor = new THREE.Color('#FE5943')
+    const insideColor = new THREE.Color('#4280F5')
+    const outsideColor = new THREE.Color('#F542B9')
     
     for(let i = 0; i < particesCount; i++){
-        positions[i * 3 + 0] = (Math.random() - 0.5) * 5
+        positions[i * 3 + 0] = (Math.random() - 0.5) * 3
         positions[i * 3 + 1] = (-objectsDistance * 2.25) - (Math.random() * objectsDistance * 5)
-        positions[i * 3 + 2] = ((Math.random() - 0.5) * 5) + 3
+        positions[i * 3 + 2] = ((Math.random() - 0.5) * 10) + 1
     
         const radius = Math.random() * 5
         
@@ -29,6 +29,7 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
     
     const particlesGeometry = new THREE.BufferGeometry()
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     
     //Material
     particlesMaterial = new THREE.ShaderMaterial({
@@ -40,7 +41,7 @@ export default function generateGalaxy(objectsDistance, renderer, scene){
             uniforms:{
                 uBlink: { value: 1 },
                 uTime: { value: 80 },
-                uSize: {value: 30 * renderer.getPixelRatio() }
+                uSize: {value: 50 * renderer.getPixelRatio() }
             }
     })
     
